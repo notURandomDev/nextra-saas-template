@@ -1,0 +1,286 @@
+# 自定义
+
+学习如何根据你的需求自定义 Nextra SaaS 模板。
+
+## 落地页自定义
+
+### 英雄区域
+
+编辑 `app/_resources/content.tsx`：
+
+```typescript
+export const heroContent: IHeroContent = {
+  enabled: true,
+  badge: {
+    status: "active",
+    text: "你的徽章文本",
+  },
+  headline: "你的标题",
+  subheadlinePrimary: "你的描述",
+  ctas: [
+    { label: "按钮 1", variant: "primary" },
+    { label: "按钮 2", variant: "outline" },
+  ],
+  socialProof: {
+    avatars: ["/avatar1.png", "/avatar2.png"],
+    description: <>你的社交证明文本</>,
+  },
+};
+```
+
+### Bento 网格卡片
+
+修改 bento 网格中的卡片：
+
+```typescript
+cards: [
+  {
+    id: "your-card",
+    icon: "IconName",  // Lucide 图标名称
+    title: "卡片标题",
+    description: "卡片描述",
+    span: "wide",      // "wide" 或 "normal"
+    type: "metrics",     // "metrics", "tags", "chart", "highlight"
+    // 添加类型特定的属性
+  },
+]
+```
+
+### 定价计划
+
+更新定价部分：
+
+```typescript
+plans: [
+  {
+    name: "计划名称",
+    description: "计划描述",
+    price: "$99/月",
+    features: ["功能 1", "功能 2"],
+    cta: "按钮文本",
+    highlighted: true,
+    badge: "推荐",
+  },
+]
+```
+
+## 主题自定义
+
+### 颜色
+
+在 `app/_resources/theme.config.tsx` 中编辑：
+
+```typescript
+export const siteConfig = {
+  primaryHue: 211,        // 0-360
+  primarySaturation: 100, // 0-100
+};
+```
+
+### Logo
+
+在 `app/_components/site-logo.tsx` 中替换 Logo：
+
+```typescript
+<Image
+  src="/your-logo.svg"  // 或 .png, .jpg
+  alt="你的 Logo"
+  width={iconSize}
+  height={iconSize}
+/>
+```
+
+## 内容自定义
+
+### 文档页面
+
+编辑 `content/[lang]/docs/` 中的 MDX 文件：
+
+```markdown
+# 你的页面标题
+
+你的内容，支持 **Markdown**。
+
+## 代码块
+
+```typescript
+const example = "code";
+```
+
+## 组件
+
+> 这是一个自定义组件示例
+```
+
+### 导航
+
+编辑 `content/[lang]/_meta.ts`：
+
+```typescript
+export default {
+  "getting-started": { title: "入门指南" },
+  "features": { title: "功能特性" },
+  "customization": { title: "自定义" },
+};
+```
+
+## i18n 自定义
+
+### 添加新语言
+
+1. **创建字典文件**
+
+```typescript
+// app/_dictionaries/fr.ts
+export default {
+  backToTop: "Retour en haut",
+  logo: {
+    title: "你的标题",
+    text: "你的文本",
+  },
+  // ... 所有其他键
+};
+```
+
+2. **更新 i18n 配置**
+
+```typescript
+// app/_dictionaries/i18n-config.ts
+export const i18n = {
+  defaultLocale: "en",
+  locales: ["en", "zh", "es", "fr"],  // 添加 "fr"
+};
+```
+
+3. **更新字典加载器**
+
+```typescript
+// app/_dictionaries/get-dictionary.ts
+const dictionaries: Dictionaries = {
+  zh: () => import("./zh"),
+  en: () => import("./en"),
+  es: () => import("./es"),
+  fr: () => import("./fr"),  // 添加法语
+};
+```
+
+4. **创建内容目录**
+
+```bash
+mkdir -p content/fr/docs
+```
+
+5. **翻译内容**
+
+将所有 MDX 文件从 `content/en/` 复制并翻译到 `content/fr/`。
+
+## 组件自定义
+
+### 创建新组件
+
+在 `app/[lang]/_components/` 中创建：
+
+```typescript
+"use client";
+
+import type { IYourComponentProps } from "../_types/your.types";
+
+export const YourComponent = (props: IYourComponentProps) => {
+  const { title, description } = props;
+  
+  return (
+    <div className="your-styles">
+      <h2>{title}</h2>
+      <p>{description}</p>
+    </div>
+  );
+};
+```
+
+### 使用自定义组件
+
+在你的页面中导入和使用：
+
+```typescript
+import { YourComponent } from "../_components/your-component";
+
+// 在你的组件中
+<YourComponent title="你好" description="世界" />
+```
+
+## 样式自定义
+
+### Tailwind CSS
+
+编辑 `app/globals.css` 进行全局样式设置：
+
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 自定义样式 */
+:root {
+  --your-custom-variable: value;
+}
+```
+
+### 自定义组件
+
+使用 Tailwind 创建可重用组件：
+
+```typescript
+<div className="flex items-center justify-between p-4 bg-white dark:bg-zinc-900">
+  {/* 你的内容 */}
+</div>
+```
+
+## 高级自定义
+
+### 自定义字体
+
+编辑 `app/[lang]/layout.tsx`：
+
+```typescript
+import { YourFont } from "next/font/google";
+
+const yourFont = YourFont({
+  subsets: ["latin"],
+  variable: "--font-your-font",
+});
+
+// 应用到 body
+<body className={`${yourFont.variable} font-sans`}>
+```
+
+### 分析
+
+在 `app/[lang]/layout.tsx` 中添加分析：
+
+```typescript
+import { Analytics } from "@vercel/analytics/react";
+
+export default function RootLayout({ children }) {
+  return (
+    <html>
+      <body>
+        <Analytics />
+        {children}
+      </body>
+    </html>
+  );
+}
+```
+
+## 最佳实践
+
+1. **保持简单** - 从最小更改开始
+2. **彻底测试** - 检查所有语言和主题
+3. **使用 TypeScript** - 保持类型安全
+4. **遵循约定** - 匹配现有代码风格
+5. **记录更改** - 更新相关文档
+
+## 下一步
+
+- [部署](/docs/deployment) - 部署你的自定义站点
+- [示例](/docs/examples) - 查看其他人构建的内容

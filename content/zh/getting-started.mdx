@@ -1,0 +1,125 @@
+# 入门指南
+
+本指南将帮助你开始使用 Nextra SaaS 模板。
+
+## 前置要求
+
+在开始之前，请确保已安装以下内容：
+
+- **Node.js** - 版本 18 或更高
+- **npm** 或 **yarn** 或 **pnpm** - 包管理器
+- **Git** - 用于版本控制
+
+## 安装
+
+1. **克隆仓库**
+
+```bash
+git clone https://github.com/your-username/nextra-saas-template.git
+cd nextra-saas-template
+```
+
+2. **安装依赖**
+
+```bash
+npm install
+# 或
+yarn install
+# 或
+pnpm install
+```
+
+3. **启动开发服务器**
+
+```bash
+npm run dev
+# 或
+yarn dev
+# 或
+pnpm dev
+```
+
+4. **打开浏览器**
+
+导航到 [http://localhost:3000](http://localhost:3000) 查看你的新站点。
+
+## 项目结构
+
+```
+nextra-saas-template/
+├── app/                    # Next.js app 目录
+│   ├── [lang]/          # i18n 路由（en, zh, es）
+│   │   ├── _components/   # React 组件
+│   │   ├── _dictionaries/ # i18n 字典
+│   │   └── _resources/    # 配置文件
+│   └── docs/           # 文档页面
+├── content/              # MDX 内容（en, zh, es）
+├── public/              # 静态资源
+├── package.json
+├── next.config.ts
+└── tsconfig.json
+```
+
+## 配置
+
+### 基本配置
+
+编辑 `next.config.ts` 进行基本设置：
+
+```typescript
+i18n: {
+  locales: ["en", "zh", "es"],
+  defaultLocale: "en",
+}
+```
+
+### 主题配置
+
+编辑 `app/_resources/theme.config.tsx` 来自定义：
+
+- Logo
+- 导航
+- 页脚
+- 主题颜色
+- 以及更多
+
+### i18n 配置
+
+在 `app/_dictionaries/` 中添加新语言：
+
+1. 创建新文件（例如 `fr.ts`）
+2. 从 `en.ts` 复制结构
+3. 翻译所有字符串
+4. 更新 `i18n-config.ts` 和 `get-dictionary.ts`
+
+## 下一步
+
+- [功能特性](/docs/features) - 了解所有可用功能
+- [自定义](/docs/customization) - 根据你的需求自定义模板
+- [部署](/docs/deployment) - 部署你的站点
+
+## 故障排除
+
+### 常见问题
+
+**端口 3000 已被占用**
+
+在 package.json 中更改端口或使用不同的端口：
+
+```bash
+PORT=3001 npm run dev
+```
+
+**构建错误**
+
+确保你使用的是最新的 Node.js 版本：
+
+```bash
+node --version
+```
+
+## 需要帮助？
+
+- 查看[文档](/docs)
+- 在 GitHub 上提交 [issue](https://github.com/your-username/nextra-saas-template/issues)
+- 加入我们的 [Discord 社区](https://discord.gg/your-server)

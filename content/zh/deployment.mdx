@@ -1,0 +1,259 @@
+# 部署
+
+学习如何部署你的 Nextra SaaS 模板站点。
+
+## Vercel（推荐）
+
+Vercel 是部署 Next.js 应用程序的最简单方法。
+
+### 前置要求
+
+- [Vercel 账户](https://vercel.com/signup)（免费）
+- [GitHub 账户](https://github.com/signup)（免费）
+
+### 步骤
+
+1. **推送到 GitHub**
+
+```bash
+git init
+git add .
+git commit -m "Initial commit"
+git branch -M main
+git remote add origin https://github.com/your-username/nextra-saas-template.git
+git push -u origin main
+```
+
+2. **导入到 Vercel**
+
+- 访问 [vercel.com/new](https://vercel.com/new)
+- 点击你的仓库上的"导入"
+- 配置项目设置
+
+3. **部署**
+
+Vercel 将自动检测 Next.js 并部署。
+
+### 环境变量
+
+在 Vercel 仪表板中添加：
+
+```
+ANALYZE=false  # 可选：禁用包分析器
+```
+
+### 自定义域名
+
+1. 转到项目设置 → 域名
+2. 添加你的自定义域名
+3. 按照说明更新 DNS 记录
+
+## Netlify
+
+Netlify 是部署的另一个不错的选择。
+
+### 步骤
+
+1. **连接 GitHub**
+
+- 访问 [app.netlify.com](https://app.netlify.com)
+- 点击"从 Git 新建站点"
+- 选择你的仓库
+
+2. **配置构建**
+
+```yaml
+Build command: npm run build
+Publish directory: .next
+```
+
+3. **部署**
+
+Netlify 将构建并部署你的站点。
+
+## 静态导出
+
+用于静态托管（GitHub Pages、S3 等）：
+
+### 配置 Next.js
+
+编辑 `next.config.ts`：
+
+```typescript
+const nextConfig = {
+  output: 'export',
+  images: {
+    unoptimized: true,
+  },
+};
+```
+
+### 构建和导出
+
+```bash
+npm run build
+# 输出将在 ./out 中
+```
+
+### 部署
+
+将 `out` 文件夹上传到你的托管提供商。
+
+## Docker
+
+使用 Docker 进行容器化环境部署。
+
+### Dockerfile
+
+```dockerfile
+FROM node:18-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm ci
+
+COPY . .
+RUN npm run build
+
+EXPOSE 3000
+
+CMD ["npm", "start"]
+```
+
+### 构建和运行
+
+```bash
+docker build -t nextra-saas-template .
+docker run -p 3000:3000 nextra-saas-template
+```
+
+## CI/CD
+
+### GitHub Actions
+
+创建 `.github/workflows/deploy.yml`：
+
+```yaml
+name: 部署到 Vercel
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: 部署到 Vercel
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.ORG_ID }}
+          vercel-project-id: ${{ secrets.PROJECT_ID }}
+          working-directory: ./
+```
+
+### 环境变量
+
+在仓库机密中设置：
+
+- `VERCEL_TOKEN` - 你的 Vercel 令牌
+- `ORG_ID` - 你的 Vercel 组织 ID
+- `PROJECT_ID` - 你的 Vercel 项目 ID
+
+## 性能优化
+
+### 部署前
+
+1. **本地测试构建**
+
+```bash
+npm run build
+npm run start
+```
+
+2. **检查包大小**
+
+```bash
+ANALYZE=true npm run build
+```
+
+3. **运行 linter**
+
+```bash
+npm run lint
+```
+
+### 部署后
+
+1. **测试所有页面** - 检查 404 错误
+2. **测试 i18n** - 验证所有语言都正常工作
+3. **测试主题** - 检查深色/浅色模式
+4. **检查性能** - 使用 Lighthouse
+
+## 监控
+
+### Vercel Analytics
+
+在 Vercel 部署上自动启用。
+
+### 自定义分析
+
+在 `app/[lang]/layout.tsx` 中添加：
+
+```typescript
+import { Analytics } from "@vercel/analytics/react";
+
+export default function RootLayout({ children }) {
+  return (
+    <html>
+      <body>
+        <Analytics />
+        {children}
+      </body>
+    </html>
+  );
+}
+```
+
+## 故障排除
+
+### 构建错误
+
+**模块未找到**
+
+```bash
+rm -rf node_modules package-lock.json
+npm install
+```
+
+**类型错误**
+
+```bash
+npm run build
+# 检查 TypeScript 错误
+```
+
+### 部署问题
+
+**404 错误**
+
+- 检查 `next.config.ts` 中的 `contentDirBasePath`
+- 验证文件结构是否匹配路由
+
+**缺少资源**
+
+- 确保所有图像都在 `public/` 中
+- 检查组件中的文件路径
+
+## 下一步
+
+- [自定义](/docs/customization) - 进一步自定义你的站点
+- [示例](/docs/examples) - 查看示例实现
+
+## 需要帮助？
+
+- 查看 [Vercel 文档](https://vercel.com/docs)
+- 提交 [issue](https://github.com/your-username/nextra-saas-template/issues)

@@ -1,0 +1,125 @@
+# Guía de Inicio
+
+Esta guía te ayudará a comenzar con la Plantilla SaaS de Nextra.
+
+## Requisitos Previos
+
+Antes de comenzar, asegúrate de tener instalado lo siguiente:
+
+- **Node.js** - Versión 18 o superior
+- **npm** o **yarn** o **pnpm** - Gestor de paquetes
+- **Git** - Para control de versiones
+
+## Instalación
+
+1. **Clona el repositorio**
+
+```bash
+git clone https://github.com/your-username/nextra-saas-template.git
+cd nextra-saas-template
+```
+
+2. **Instala las dependencias**
+
+```bash
+npm install
+# o
+yarn install
+# o
+pnpm install
+```
+
+3. **Inicia el servidor de desarrollo**
+
+```bash
+npm run dev
+# o
+yarn dev
+# o
+pnpm dev
+```
+
+4. **Abre tu navegador**
+
+Navega a [http://localhost:3000](http://localhost:3000) para ver tu nuevo sitio.
+
+## Estructura del Proyecto
+
+```
+nextra-saas-template/
+├── app/                    # Directorio de Next.js app
+│   ├── [lang]/          # Rutas i18n (en, zh, es)
+│   │   ├── _components/   # Componentes React
+│   │   ├── _dictionaries/ # Diccionarios i18n
+│   │   └── _resources/    # Archivos de configuración
+│   └── docs/           # Páginas de documentación
+├── content/              # Contenido MDX (en, zh, es)
+├── public/              # Activos estáticos
+├── package.json
+├── next.config.ts
+└── tsconfig.json
+```
+
+## Configuración
+
+### Configuración Básica
+
+Edita `next.config.ts` para configuración básica:
+
+```typescript
+i18n: {
+  locales: ["en", "zh", "es"],
+  defaultLocale: "en",
+}
+```
+
+### Configuración del Tema
+
+Edita `app/_resources/theme.config.tsx` para personalizar:
+
+- Logo
+- Navegación
+- Pie de página
+- Colores del tema
+- Y más
+
+### Configuración i18n
+
+Añade nuevos idiomas en `app/_dictionaries/`:
+
+1. Crea un nuevo archivo (ej. `fr.ts`)
+2. Copia la estructura de `en.ts`
+3. Traduce todas las cadenas
+4. Actualiza `i18n-config.ts` y `get-dictionary.ts`
+
+## Próximos Pasos
+
+- [Características](/docs/features) - Conoce todas las características disponibles
+- [Personalización](/docs/customization) - Personaliza la plantilla para tus necesidades
+- [Despliegue](/docs/deployment) - Despliega tu sitio
+
+## Solución de Problemas
+
+### Problemas Comunes
+
+**El puerto 3000 ya está en uso**
+
+Cambia el puerto en tu package.json o usa un puerto diferente:
+
+```bash
+PORT=3001 npm run dev
+```
+
+**Errores de construcción**
+
+Asegúrate de tener la última versión de Node.js:
+
+```bash
+node --version
+```
+
+## ¿Necesitas Ayuda?
+
+- Consulta la [documentación](/docs)
+- Abre un [issue en GitHub](https://github.com/your-username/nextra-saas-template/issues)
+- Únete a nuestra [comunidad de Discord](https://discord.gg/your-server)

@@ -1,0 +1,259 @@
+# Despliegue
+
+Aprende cómo desplegar tu sitio de Plantilla SaaS de Nextra.
+
+## Vercel (Recomendado)
+
+Vercel es la forma más fácil de desplegar aplicaciones Next.js.
+
+### Requisitos Previos
+
+- [Cuenta de Vercel](https://vercel.com/signup) (Gratis)
+- [Cuenta de GitHub](https://github.com/signup) (Gratis)
+
+### Pasos
+
+1. **Empuja a GitHub**
+
+```bash
+git init
+git add .
+git commit -m "Initial commit"
+git branch -M main
+git remote add origin https://github.com/your-username/nextra-saas-template.git
+git push -u origin main
+```
+
+2. **Importa a Vercel**
+
+- Ve a [vercel.com/new](https://vercel.com/new)
+- Haz clic en "Importar" en tu repositorio
+- Configura los ajustes del proyecto
+
+3. **Despliega**
+
+Vercel detectará automáticamente Next.js y desplegará.
+
+### Variables de Entorno
+
+Añade en el panel de Vercel:
+
+```
+ANALYZE=false  # Opcional: Deshabilitar analizador de bundles
+```
+
+### Dominio Personalizado
+
+1. Ve a Configuración del Proyecto → Dominios
+2. Añade tu dominio personalizado
+3. Actualiza los registros DNS según las instrucciones
+
+## Netlify
+
+Netlify es otra excelente opción para despliegue.
+
+### Pasos
+
+1. **Conecta GitHub**
+
+- Ve a [app.netlify.com](https://app.netlify.com)
+- Haz clic en "Nuevo sitio desde Git"
+- Selecciona tu repositorio
+
+2. **Configura Construcción**
+
+```yaml
+Build command: npm run build
+Publish directory: .next
+```
+
+3. **Despliega**
+
+Netlify construirá y desplegará tu sitio.
+
+## Exportación Estática
+
+Para alojamiento estático (GitHub Pages, S3, etc.):
+
+### Configura Next.js
+
+Edita `next.config.ts`:
+
+```typescript
+const nextConfig = {
+  output: 'export',
+  images: {
+    unoptimized: true,
+  },
+};
+```
+
+### Construye y Exporta
+
+```bash
+npm run build
+# La salida estará en ./out
+```
+
+### Despliega
+
+Sube la carpeta `out` a tu proveedor de alojamiento.
+
+## Docker
+
+Despliega con Docker para entornos contenedorizados.
+
+### Dockerfile
+
+```dockerfile
+FROM node:18-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm ci
+
+COPY . .
+RUN npm run build
+
+EXPOSE 3000
+
+CMD ["npm", "start"]
+```
+
+### Construye y Ejecuta
+
+```bash
+docker build -t nextra-saas-template .
+docker run -p 3000:3000 nextra-saas-template
+```
+
+## CI/CD
+
+### GitHub Actions
+
+Crea `.github/workflows/deploy.yml`:
+
+```yaml
+name: Desplegar a Vercel
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Desplegar a Vercel
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.ORG_ID }}
+          vercel-project-id: ${{ secrets.PROJECT_ID }}
+          working-directory: ./
+```
+
+### Variables de Entorno
+
+Configura en secretos del repositorio:
+
+- `VERCEL_TOKEN` - Tu token de Vercel
+- `ORG_ID` - Tu ID de organización de Vercel
+- `PROJECT_ID` - Tu ID de proyecto de Vercel
+
+## Optimización de Rendimiento
+
+### Antes del Despliegue
+
+1. **Prueba la construcción localmente**
+
+```bash
+npm run build
+npm run start
+```
+
+2. **Verifica el tamaño del bundle**
+
+```bash
+ANALYZE=true npm run build
+```
+
+3. **Ejecuta el linter**
+
+```bash
+npm run lint
+```
+
+### Después del Despliegue
+
+1. **Prueba todas las páginas** - Verifica errores 404
+2. **Prueba i18n** - Verifica que todos los idiomas funcionen
+3. **Prueba temas** - Verifica modo oscuro/claro
+4. **Verifica rendimiento** - Usa Lighthouse
+
+## Monitoreo
+
+### Vercel Analytics
+
+Habilitado automáticamente en despliegues de Vercel.
+
+### Analíticas Personalizadas
+
+Añade en `app/[lang]/layout.tsx`:
+
+```typescript
+import { Analytics } from "@vercel/analytics/react";
+
+export default function RootLayout({ children }) {
+  return (
+    <html>
+      <body>
+        <Analytics />
+        {children}
+      </body>
+    </html>
+  );
+}
+```
+
+## Solución de Problemas
+
+### Errores de Construcción
+
+**Módulo no encontrado**
+
+```bash
+rm -rf node_modules package-lock.json
+npm install
+```
+
+**Errores de tipo**
+
+```bash
+npm run build
+# Verifica errores de TypeScript
+```
+
+### Problemas de Despliegue
+
+**Errores 404**
+
+- Verifica `contentDirBasePath` en `next.config.ts`
+- Verifica que la estructura de archivos coincida con las rutas
+
+**Activos faltantes**
+
+- Asegúrate de que todas las imágenes estén en `public/`
+- Verifica las rutas de archivos en componentes
+
+## Próximos Pasos
+
+- [Personalización](/docs/customization) - Personaliza más tu sitio
+- [Ejemplos](/docs/examples) - Ver implementaciones de ejemplo
+
+## ¿Necesitas Ayuda?
+
+- Consulta [Documentación de Vercel](https://vercel.com/docs)
+- Abre un [issue](https://github.com/your-username/nextra-saas-template/issues)

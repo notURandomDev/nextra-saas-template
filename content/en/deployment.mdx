@@ -1,0 +1,259 @@
+# Deployment
+
+Learn how to deploy your Nextra SaaS Template site.
+
+## Vercel (Recommended)
+
+Vercel is the easiest way to deploy Next.js applications.
+
+### Prerequisites
+
+- [Vercel Account](https://vercel.com/signup) (Free)
+- [GitHub Account](https://github.com/signup) (Free)
+
+### Steps
+
+1. **Push to GitHub**
+
+```bash
+git init
+git add .
+git commit -m "Initial commit"
+git branch -M main
+git remote add origin https://github.com/your-username/nextra-saas-template.git
+git push -u origin main
+```
+
+2. **Import to Vercel**
+
+- Go to [vercel.com/new](https://vercel.com/new)
+- Click "Import" on your repository
+- Configure project settings
+
+3. **Deploy**
+
+Vercel will automatically detect Next.js and deploy.
+
+### Environment Variables
+
+Add in Vercel dashboard:
+
+```
+ANALYZE=false  # Optional: Disable bundle analyzer
+```
+
+### Custom Domain
+
+1. Go to Project Settings → Domains
+2. Add your custom domain
+3. Update DNS records as instructed
+
+## Netlify
+
+Netlify is another great option for deployment.
+
+### Steps
+
+1. **Connect GitHub**
+
+- Go to [app.netlify.com](https://app.netlify.com)
+- Click "New site from Git"
+- Select your repository
+
+2. **Configure Build**
+
+```yaml
+Build command: npm run build
+Publish directory: .next
+```
+
+3. **Deploy**
+
+Netlify will build and deploy your site.
+
+## Static Export
+
+For static hosting (GitHub Pages, S3, etc.):
+
+### Configure Next.js
+
+Edit `next.config.ts`:
+
+```typescript
+const nextConfig = {
+  output: 'export',
+  images: {
+    unoptimized: true,
+  },
+};
+```
+
+### Build and Export
+
+```bash
+npm run build
+# Output will be in ./out
+```
+
+### Deploy
+
+Upload the `out` folder to your hosting provider.
+
+## Docker
+
+Deploy with Docker for containerized environments.
+
+### Dockerfile
+
+```dockerfile
+FROM node:18-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm ci
+
+COPY . .
+RUN npm run build
+
+EXPOSE 3000
+
+CMD ["npm", "start"]
+```
+
+### Build and Run
+
+```bash
+docker build -t nextra-saas-template .
+docker run -p 3000:3000 nextra-saas-template
+```
+
+## CI/CD
+
+### GitHub Actions
+
+Create `.github/workflows/deploy.yml`:
+
+```yaml
+name: Deploy to Vercel
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Deploy to Vercel
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.ORG_ID }}
+          vercel-project-id: ${{ secrets.PROJECT_ID }}
+          working-directory: ./
+```
+
+### Environment Variables
+
+Set in repository secrets:
+
+- `VERCEL_TOKEN` - Your Vercel token
+- `ORG_ID` - Your Vercel organization ID
+- `PROJECT_ID` - Your Vercel project ID
+
+## Performance Optimization
+
+### Before Deployment
+
+1. **Test build locally**
+
+```bash
+npm run build
+npm run start
+```
+
+2. **Check bundle size**
+
+```bash
+ANALYZE=true npm run build
+```
+
+3. **Run linter**
+
+```bash
+npm run lint
+```
+
+### After Deployment
+
+1. **Test all pages** - Check for 404s
+2. **Test i18n** - Verify all languages work
+3. **Test themes** - Check light/dark mode
+4. **Check performance** - Use Lighthouse
+
+## Monitoring
+
+### Vercel Analytics
+
+Automatically enabled on Vercel deployments.
+
+### Custom Analytics
+
+Add in `app/[lang]/layout.tsx`:
+
+```typescript
+import { Analytics } from "@vercel/analytics/react";
+
+export default function RootLayout({ children }) {
+  return (
+    <html>
+      <body>
+        <Analytics />
+        {children}
+      </body>
+    </html>
+  );
+}
+```
+
+## Troubleshooting
+
+### Build Errors
+
+**Module not found**
+
+```bash
+rm -rf node_modules package-lock.json
+npm install
+```
+
+**Type errors**
+
+```bash
+npm run build
+# Check TypeScript errors
+```
+
+### Deployment Issues
+
+**404 errors**
+
+- Check `next.config.ts` `contentDirBasePath`
+- Verify file structure matches routes
+
+**Missing assets**
+
+- Ensure all images are in `public/`
+- Check file paths in components
+
+## Next Steps
+
+- [Customization](/docs/customization) - Further customize your site
+- [Examples](/docs/examples) - See example implementations
+
+## Need Help?
+
+- Check [Vercel Docs](https://vercel.com/docs)
+- Open an [issue](https://github.com/your-username/nextra-saas-template/issues)

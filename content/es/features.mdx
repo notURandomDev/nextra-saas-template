@@ -1,0 +1,135 @@
+# Características
+
+La Plantilla SaaS de Nextra viene con muchas características poderosas de fábrica.
+
+## Landing Page
+
+### Sección Hero
+
+Sección hero llamativa con:
+
+- Insignia personalizable
+- Titular y subtítulo
+- Botones de llamada a la acción
+- Prueba social con avatares
+
+### Carrusel de Logos
+
+Exhibición de logos animada mostrando:
+
+- Socios tecnológicos
+- Herramientas y frameworks
+- Animación de desplazamiento infinito
+
+### Cuadrícula Bento
+
+Diseño de cuadrícula moderna con:
+
+- Tarjetas de métricas con estado del sistema
+- Destacados de características con etiquetas
+- Gráficos interactivos
+- Spans personalizables (ancho, normal)
+
+### Sección de Precios
+
+Visualización de precios flexible con:
+
+- Múltiples planes de precios
+- Listas de características
+- Plan recomendado destacado
+- Botones CTA personalizables
+
+### Pie de Página
+
+Pie de página completo con:
+
+- Descripción de marca
+- Grupos de enlaces
+- Enlaces de redes sociales
+- Aviso de copyright
+
+## Sistema de Documentación
+
+Potenciado por Nextra, incluye:
+
+- **Búsqueda** - Búsqueda de texto completo en todas las páginas
+- **Navegación** - Tabla de contenido generada automáticamente
+- **Resaltado de Sintaxis** - Bloques de código con resaltado apropiado
+- **Soporte LaTeX** - Soporte de notación matemática
+- **Diseño Responsivo** - Diseño amigable para móviles
+
+## Soporte i18n
+
+Internacionalización incorporada con:
+
+- **Tres Idiomas** - Inglés, chino, español
+- **Fácil Extensión** - Sistema de diccionario simple
+- **Seguridad de Tipos** - Soporte completo de TypeScript
+- **Enrutamiento Basado en URL** - `/en/*`, `/zh/*`, `/es/*`
+
+### Añadir Nuevos Idiomas
+
+1. Crea archivo de diccionario en `app/_dictionaries/[lang].ts`
+2. Añade idioma a `i18n-config.ts`
+3. Añade importación en `get-dictionary.ts`
+4. Crea directorio de contenido en `content/[lang]/`
+
+## Soporte de Temas
+
+### Modo Oscuro/Claro
+
+- **Predeterminado del Sistema** - Sigue la preferencia del sistema del usuario
+- **Alternancia Manual** - Los usuarios pueden cambiar temas
+- **Transiciones Suaves** - Cambios de tema animados
+- **Persistente** - Preferencia de tema guardada en localStorage
+
+### Personalización
+
+Edita colores del tema en `app/_resources/theme.config.tsx`:
+
+```typescript
+primaryHue: 211,        // Matiz del color primario (0-360)
+primarySaturation: 100, // Saturación del color primario (0-100)
+```
+
+## Componentes UI
+
+Construido con tecnologías modernas:
+
+- **Radix UI** - Componentes accesibles sin estilo
+- **Tailwind CSS** - Framework CSS utilitario
+- **Lucide Icons** - Iconos hermosos y consistentes
+- **Framer Motion** - Animaciones suaves
+
+### Componentes Disponibles
+
+- Botones (primario, contorno, fantasma)
+- Tarjetas y contenedores
+- Menús de navegación
+- Modales y diálogos
+- Elementos de formulario
+- ¡Y más!
+
+## Rendimiento
+
+Optimizado para velocidad:
+
+- **Generación Estática** - Páginas pre-renderizadas
+- **División de Código** - Optimización automática de bundles
+- **Optimización de Imágenes** - Componente Image de Next.js
+- **Optimización de Fuentes** - Componente Font de Next.js
+
+## Experiencia de Desarrollador
+
+Construido para desarrolladores:
+
+- **TypeScript** - Seguridad de tipos completa
+- **Recarga en Caliente** - Retroalimentación instantánea en cambios
+- **ESLint** - Verificaciones de calidad de código
+- **Prettier** - Formateo de código (opcional)
+
+## Próximos Pasos
+
+- [Personalización](/docs/customization) - Aprende cómo personalizar la plantilla
+- [Despliegue](/docs/deployment) - Despliega tu sitio a producción
+- [Ejemplos](/docs/examples) - Ver implementaciones de ejemplo

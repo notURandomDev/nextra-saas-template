@@ -1,0 +1,288 @@
+# Personalización
+
+Aprende cómo personalizar la Plantilla SaaS de Nextra para tus necesidades.
+
+## Personalización de Landing Page
+
+### Sección Hero
+
+Edita `app/_resources/content.tsx`:
+
+```typescript
+export const heroContent: IHeroContent = {
+  enabled: true,
+  badge: {
+    status: "active",
+    text: "Tu Texto de Insignia",
+  },
+  headline: "Tu Titular",
+  subheadlinePrimary: "Tu Descripción",
+  ctas: [
+    { label: "Botón 1", variant: "primary" },
+    { label: "Botón 2", variant: "outline" },
+  ],
+  socialProof: {
+    avatars: ["/avatar1.png", "/avatar2.png"],
+    description: <>Tu texto de prueba social</>,
+  },
+};
+```
+
+### Tarjetas de Cuadrícula Bento
+
+Modifica las tarjetas en la cuadrícula bento:
+
+```typescript
+cards: [
+  {
+    id: "your-card",
+    icon: "IconName", // Nombre de icono Lucide
+    title: "Título de Tarjeta",
+    description: "Descripción de tarjeta",
+    span: "wide", // "wide" o "normal"
+    type: "metrics", // "metrics", "tags", "chart", "highlight"
+    // Añade props específicos del tipo
+  },
+];
+```
+
+### Planes de Precios
+
+Actualiza la sección de precios:
+
+```typescript
+plans: [
+  {
+    name: "Nombre del Plan",
+    description: "Descripción del plan",
+    price: "$99/mes",
+    features: ["Característica 1", "Característica 2"],
+    cta: "Texto del Botón",
+    highlighted: true,
+    badge: "Recomendado",
+  },
+];
+```
+
+## Personalización del Tema
+
+### Colores
+
+Edita en `app/_resources/theme.config.tsx`:
+
+```typescript
+export const siteConfig = {
+  primaryHue: 211, // 0-360
+  primarySaturation: 100, // 0-100
+};
+```
+
+### Logo
+
+Reemplaza el logo en `app/_components/site-logo.tsx`:
+
+```typescript
+<Image
+  src="/your-logo.svg"  // o .png, .jpg
+  alt="Tu Logo"
+  width={iconSize}
+  height={iconSize}
+/>
+```
+
+## Personalización de Contenido
+
+### Páginas de Documentación
+
+Edita archivos MDX en `content/[lang]/docs/`:
+
+````markdown
+# Tu Título de Página
+
+Tu contenido con soporte **Markdown**.
+
+## Bloques de Código
+
+```typescript
+const example = "code";
+```
+````
+
+## Componentes
+
+> Este es un ejemplo de componente personalizado
+
+````
+
+### Navegación
+
+Edita `content/[lang]/_meta.ts`:
+
+```typescript
+export default {
+  "getting-started": { title: "Guía de Inicio" },
+  "features": { title: "Características" },
+  "customization": { title: "Personalización" },
+};
+````
+
+## Personalización i18n
+
+### Añadir Nuevo Idioma
+
+1. **Crea archivo de diccionario**
+
+```typescript
+// app/_dictionaries/fr.ts
+export default {
+  backToTop: "Retour en haut",
+  logo: {
+    title: "Tu Título",
+    text: "Tu Texto",
+  },
+  // ... todas las demás claves
+};
+```
+
+2. **Actualiza configuración i18n**
+
+```typescript
+// app/_dictionaries/i18n-config.ts
+export const i18n = {
+  defaultLocale: "en",
+  locales: ["en", "zh", "es", "fr"], // Añade "fr"
+};
+```
+
+3. **Actualiza cargador de diccionario**
+
+```typescript
+// app/_dictionaries/get-dictionary.ts
+const dictionaries: Dictionaries = {
+  zh: () => import("./zh"),
+  en: () => import("./en"),
+  es: () => import("./es"),
+  fr: () => import("./fr"), // Añade francés
+};
+```
+
+4. **Crea directorio de contenido**
+
+```bash
+mkdir -p content/fr/docs
+```
+
+5. **Traduce contenido**
+
+Copia y traduce todos los archivos MDX de `content/en/` a `content/fr/`.
+
+## Personalización de Componentes
+
+### Crear Nuevos Componentes
+
+Crea en `app/[lang]/_components/`:
+
+```typescript
+"use client";
+
+import type { IYourComponentProps } from "../_types/your.types";
+
+export const YourComponent = (props: IYourComponentProps) => {
+  const { title, description } = props;
+
+  return (
+    <div className="your-styles">
+      <h2>{title}</h2>
+      <p>{description}</p>
+    </div>
+  );
+};
+```
+
+### Usar Componentes Personalizados
+
+Importa y usa en tus páginas:
+
+```typescript
+import { YourComponent } from "../_components/your-component";
+
+// En tu componente
+<YourComponent title="Hola" description="Mundo" />
+```
+
+## Personalización de Estilos
+
+### Tailwind CSS
+
+Edita `app/globals.css` para estilos globales:
+
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Estilos personalizados */
+:root {
+  --your-custom-variable: value;
+}
+```
+
+### Componentes Personalizados
+
+Crea componentes reutilizables con Tailwind:
+
+```typescript
+<div className="flex items-center justify-between p-4 bg-white dark:bg-zinc-900">
+  {/* Tu contenido */}
+</div>
+```
+
+## Personalización Avanzada
+
+### Fuentes Personalizadas
+
+Edita `app/[lang]/layout.tsx`:
+
+```typescript
+import { YourFont } from "next/font/google";
+
+const yourFont = YourFont({
+  subsets: ["latin"],
+  variable: "--font-your-font",
+});
+
+// Aplicar al body
+<body className={`${yourFont.variable} font-sans`}>
+```
+
+### Analíticas
+
+Añade analíticas en `app/[lang]/layout.tsx`:
+
+```typescript
+import { Analytics } from "@vercel/analytics/react";
+
+export default function RootLayout({ children }) {
+  return (
+    <html>
+      <body>
+        <Analytics />
+        {children}
+      </body>
+    </html>
+  );
+}
+```
+
+## Mejores Prácticas
+
+1. **Manténlo simple** - Comienza con cambios mínimos
+2. **Prueba a fondo** - Verifica todos los idiomas y temas
+3. **Usa TypeScript** - Mantén la seguridad de tipos
+4. **Sigue las convenciones** - Coincide con el estilo de código existente
+5. **Documenta los cambios** - Actualiza la documentación relevante
+
+## Próximos Pasos
+
+- [Despliegue](/docs/deployment) - Despliega tu sitio personalizado
+- [Ejemplos](/docs/examples) - Ver lo que otros han construido

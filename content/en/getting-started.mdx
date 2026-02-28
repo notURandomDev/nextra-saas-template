@@ -1,0 +1,125 @@
+# Getting Started
+
+This guide will help you get started with Nextra SaaS Template.
+
+## Prerequisites
+
+Before you begin, make sure you have the following installed:
+
+- **Node.js** - Version 18 or higher
+- **npm** or **yarn** or **pnpm** - Package manager
+- **Git** - For version control
+
+## Installation
+
+1. **Clone the repository**
+
+```bash
+git clone https://github.com/your-username/nextra-saas-template.git
+cd nextra-saas-template
+```
+
+2. **Install dependencies**
+
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+```
+
+3. **Start the development server**
+
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+```
+
+4. **Open your browser**
+
+Navigate to [http://localhost:3000](http://localhost:3000) to see your new site.
+
+## Project Structure
+
+```
+nextra-saas-template/
+├── app/                    # Next.js app directory
+│   ├── [lang]/          # i18n routes (en, zh, es)
+│   │   ├── _components/   # React components
+│   │   ├── _dictionaries/ # i18n dictionaries
+│   │   └── _resources/    # Configuration files
+│   └── docs/           # Documentation pages
+├── content/              # MDX content (en, zh, es)
+├── public/              # Static assets
+├── package.json
+├── next.config.ts
+└── tsconfig.json
+```
+
+## Configuration
+
+### Basic Configuration
+
+Edit `next.config.ts` for basic settings:
+
+```typescript
+i18n: {
+  locales: ["en", "zh", "es"],
+  defaultLocale: "en",
+}
+```
+
+### Theme Configuration
+
+Edit `app/_resources/theme.config.tsx` to customize:
+
+- Logo
+- Navigation
+- Footer
+- Theme colors
+- And more
+
+### i18n Configuration
+
+Add new languages in `app/_dictionaries/`:
+
+1. Create a new file (e.g., `fr.ts`)
+2. Copy the structure from `en.ts`
+3. Translate all strings
+4. Update `i18n-config.ts` and `get-dictionary.ts`
+
+## Next Steps
+
+- [Features](/docs/features) - Learn about all available features
+- [Customization](/docs/customization) - Customize the template for your needs
+- [Deployment](/docs/deployment) - Deploy your site
+
+## Troubleshooting
+
+### Common Issues
+
+**Port 3000 already in use**
+
+Change the port in your package.json or use a different port:
+
+```bash
+PORT=3001 npm run dev
+```
+
+**Build errors**
+
+Make sure you have the latest Node.js version:
+
+```bash
+node --version
+```
+
+## Need Help?
+
+- Check the [documentation](/docs)
+- Open an [issue on GitHub](https://github.com/your-username/nextra-saas-template/issues)
+- Join our [Discord community](https://discord.gg/your-server)
