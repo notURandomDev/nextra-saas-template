@@ -30,7 +30,6 @@ export interface IHeroContent {
   subheadline: string;
   ctas: IButtonConfig[];
   socialProof: {
-    avatars: string[];
     description: ReactNode;
   };
 }

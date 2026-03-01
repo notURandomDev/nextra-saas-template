@@ -150,6 +150,11 @@ export const getLayoutConfig = (dictionary: Dictionary) => ({
  * Used for other business logic
  */
 export const siteConfig = {
+  /** Image assets configuration */
+  images: {
+    /** Social proof avatars for hero section */
+    socialProofAvatars: ["/images/qi.png", "/images/vessel.png", "/images/joint.png"],
+  },
   /** GitHub API configuration */
   gitHub: {
     /** Repository name, format: owner/repo */

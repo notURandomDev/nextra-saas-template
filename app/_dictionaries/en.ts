@@ -29,7 +29,6 @@ export default {
         { label: "View Documentation", variant: "outline" },
       ],
       socialProof: {
-        avatars: ["/images/qi.png", "/images/vessel.png", "/images/joint.png"],
         description: {
           prefix: "Used by",
           count: "1000+",

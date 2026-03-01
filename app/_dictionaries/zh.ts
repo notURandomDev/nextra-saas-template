@@ -29,7 +29,6 @@ export default {
         { label: "查看文档", variant: "outline" },
       ],
       socialProof: {
-        avatars: ["/images/qi.png", "/images/vessel.png", "/images/joint.png"],
         description: {
           prefix: "已有",
           count: "1000+",

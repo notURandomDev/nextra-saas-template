@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Button } from "./ui/button";
 import { useDictionary } from "../_hooks/use-dictionary";
+import { siteConfig } from "../_config";
 
 const textRevealVariants = {
   hidden: { y: "100%" },
@@ -69,7 +70,7 @@ export const Hero = () => {
               animate="visible"
               custom={1}
             >
-              {content.subheadline.split('\n').map((line, i) => (
+              {content.subheadline.split("\n").map((line, i) => (
                 <div key={i}>{line}</div>
               ))}
             </motion.span>
@@ -115,7 +116,7 @@ export const Hero = () => {
           className="flex flex-col items-center gap-4"
         >
           <div className="flex items-center -space-x-3">
-            {content.socialProof.avatars.map((avatar, index) => (
+            {siteConfig.images.socialProofAvatars.map((avatar, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, scale: 0.5, x: -20 }}
