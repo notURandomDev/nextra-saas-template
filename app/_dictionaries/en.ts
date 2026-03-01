@@ -30,9 +30,9 @@ export default {
       ],
       socialProof: {
         description: {
-          prefix: "Used by",
-          count: "1000+",
-          middle: "developers worldwide to build their SaaS projects",
+          prefix: "Built with",
+          count: "5",
+          middle: "essential technologies for modern SaaS development",
         },
       },
     },

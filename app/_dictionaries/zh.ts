@@ -30,9 +30,9 @@ export default {
       ],
       socialProof: {
         description: {
-          prefix: "已有",
-          count: "1000+",
-          middle: "开发者使用此模板构建他们的 SaaS 项目",
+          prefix: "基于",
+          count: "5",
+          middle: "核心技术栈构建现代 SaaS 应用",
         },
       },
     },

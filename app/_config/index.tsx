@@ -153,7 +153,13 @@ export const siteConfig = {
   /** Image assets configuration */
   images: {
     /** Social proof avatars for hero section */
-    socialProofAvatars: ["/images/qi.png", "/images/vessel.png", "/images/joint.png"],
+    socialProofAvatars: [
+      "/images/react.png",
+      "/images/nextra.png",
+      "/images/nextjs.png",
+      "/images/tailwind.png",
+      "/images/framer.png",
+    ],
   },
   /** GitHub API configuration */
   gitHub: {
