@@ -81,8 +81,8 @@ export default {
           id: "docs",
           icon: "FileText",
           title: "集成文档系统",
-          description: "基于 Nextra 的强大文档系统。包含搜索、导航、语法高亮和 LaTeX 支持。",
-          type: "chart",
+          description: "基于 Nextra 的强大文档系统。包含全文搜索、导航、语法高亮和 LaTeX 支持。",
+          type: "search",
         },
         {
           id: "theme",

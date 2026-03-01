@@ -2,7 +2,14 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
-import { Layout, Languages, FileText, Moon, Component as ComponentIcon } from "lucide-react";
+import {
+  Layout,
+  Languages,
+  FileText,
+  Moon,
+  Component as ComponentIcon,
+  Command,
+} from "lucide-react";
 import { useDictionary } from "../_hooks/use-dictionary";
 
 const iconMap = {
@@ -32,6 +39,36 @@ const itemVariants = {
       ease: [0.22, 1, 0.36, 1] as const,
     },
   },
+};
+
+const KeyboardCommand = () => {
+  const [pressed, setPressed] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPressed(true);
+      setTimeout(() => setPressed(false), 200);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="flex items-center gap-1">
+      <motion.kbd
+        animate={pressed ? { scale: 0.95, y: 2 } : { scale: 1, y: 0 }}
+        className="px-2 py-1 text-xs bg-zinc-800 border border-zinc-700 rounded text-zinc-300 font-mono"
+      >
+        ⌘
+      </motion.kbd>
+      <motion.kbd
+        animate={pressed ? { scale: 0.95, y: 2 } : { scale: 1, y: 0 }}
+        transition={{ delay: 0.05 }}
+        className="px-2 py-1 text-xs bg-zinc-800 border border-zinc-700 rounded text-zinc-300 font-mono"
+      >
+        K
+      </motion.kbd>
+    </div>
+  );
 };
 
 const SystemStatus = () => {
@@ -159,6 +196,15 @@ const BentoCard = (props: { card: any }) => {
           <h3 className="text-lg font-semibold text-white mb-2">{card.title}</h3>
           <p className="text-zinc-400 text-sm mb-4">{card.description}</p>
           <AnimatedChart />
+        </>
+      ) : card.type === "search" ? (
+        <>
+          <div className="p-2 rounded-lg bg-zinc-800 w-fit mb-4">
+            <Command className="w-5 h-5 text-zinc-400" strokeWidth={1.5} />
+          </div>
+          <h3 className="text-lg font-semibold text-white mb-2">{card.title}</h3>
+          <p className="text-zinc-400 text-sm mb-6">{card.description}</p>
+          <KeyboardCommand />
         </>
       ) : card.type === "highlight" ? (
         <>

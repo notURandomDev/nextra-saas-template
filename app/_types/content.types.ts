@@ -76,11 +76,16 @@ export interface IBentoCardWithHighlight extends IBentoCardBase {
   };
 }
 
+export interface IBentoCardWithSearch extends IBentoCardBase {
+  type: "search";
+}
+
 export type TBentoCard =
   | IBentoCardWithMetrics
   | IBentoCardWithTags
   | IBentoCardWithChart
-  | IBentoCardWithHighlight;
+  | IBentoCardWithHighlight
+  | IBentoCardWithSearch;
 
 export interface IBentoGridContent {
   enabled: boolean;

@@ -82,8 +82,8 @@ export default {
           icon: "FileText",
           title: "Integrated Documentation",
           description:
-            "Powerful documentation system based on Nextra. Search, navigation, syntax highlighting, and LaTeX support included.",
-          type: "chart",
+            "Powerful documentation system based on Nextra. Full-text search, navigation, syntax highlighting, and LaTeX support included.",
+          type: "search",
         },
         {
           id: "theme",
